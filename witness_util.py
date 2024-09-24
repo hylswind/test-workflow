@@ -115,7 +115,7 @@ def gen_witness_proof(statement):
 
         # request timestamp
         proof_hash = hashlib.sha256(
-            statement_proof.encode("utf-8")).hexdigest()
+            statement_proof.encode("utf-8")).digest()
         tsa_req = tsp.TimeStampReq({
             "version": "v1",
             "message_imprint": {
@@ -126,6 +126,7 @@ def gen_witness_proof(statement):
             },
             "cert_req": True,
         })
+
         tsa_response = requests.post(
             TSA_SERVER_URL,
             headers={"Content-Type": "application/timestamp-query"},
