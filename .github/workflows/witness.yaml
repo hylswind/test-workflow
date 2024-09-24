@@ -1,0 +1,43 @@
+name: Witness Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      region:
+        description: "The region of ec2 instance"
+        required: true
+        type: string
+      instanceID:
+        description: "The ec2 instance ID"
+        required: true
+        type: string
+      artifactName:
+        description: "Name of artifact"
+        required: false
+        type: string
+
+jobs:
+  witness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Run the Python script
+        env:
+          AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+          AWS_KEY_SECRET: ${{ secrets.AWS_KEY_SECRET }}
+        run: |
+          pip install -r requirements.txt
+          python main.py "${{ github.event.inputs.region }}" "${{ github.event.inputs.instanceID }}"
+
+      # - name: Upload proof as artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ github.event.inputs.artifactName }}
+      #     path: path/to/your/binary/file
