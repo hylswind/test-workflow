@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import email
 from email import policy
@@ -105,8 +106,11 @@ def main():
         witness_proof = witness_util.gen_witness_proof(witness_statement)
 
         logging.info(json.dumps(witness_proof))
+
+        sys.exit(0)
     except BaseException as e:
         logging.error(str(e))
+        sys.exit(-1)
 
 
 if __name__ == "__main__":
