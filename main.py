@@ -18,6 +18,8 @@ import instance_util
 WITNDEE_DATA_PREFIX = "WITNESS_DATA="
 ALLOW_INSTANCE_EVENTS = []
 
+logging.basicConfig(level=logging.INFO)
+
 
 def parse_instance_userdata(userdata):
     try:
@@ -106,11 +108,9 @@ def main():
         witness_proof = witness_util.gen_witness_proof(witness_statement)
 
         logging.info(json.dumps(witness_proof))
-
-        sys.exit(0)
     except BaseException as e:
         logging.error(str(e))
-        sys.exit(-1)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
