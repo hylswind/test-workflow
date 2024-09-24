@@ -16,6 +16,9 @@ on:
         required: false
         type: string
 
+permissions:
+  id-token: write
+
 jobs:
   witness:
     runs-on: ubuntu-latest

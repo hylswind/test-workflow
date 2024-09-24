@@ -105,11 +105,11 @@ def gen_witness_proof(statement):
             statement, separators=(',', ':')).encode("utf-8")).hexdigest()
 
         # request oidc token
-        oidc_req_url = f"{os.environ['GH_ID_TOKEN_REQ_URL']}&audience=sugarapple-proof-{statement_hash}"
+        oidc_req_url = f"{os.environ['ACTIONS_ID_TOKEN_REQUEST_URL']}&audience=sugarapple-proof-{statement_hash}"
         oidc_response = requests.get(
             oidc_req_url,
             headers={
-                "Authorization": f"bearer {os.environ['GH_ID_TOKEN_REQ_TOKEN']}"}
+                "Authorization": f"bearer {os.environ['ACTIONS_ID_TOKEN_REQUEST_TOKEN']}"}
         )
         statement_proof = oidc_response.json()["value"]
 
