@@ -12,7 +12,7 @@ from asn1crypto import tsp, algos
 import instance_util
 
 WITNESS_TS_TAG = "WITNESS-TS-TAG"
-ALLOWED_INSTANCE_EVENTS = []
+ALLOWED_INSTANCE_EVENTS = ["CreateTags"]
 TSA_SERVER_URL = "http://timestamp.digicert.com"
 
 
@@ -114,7 +114,8 @@ def gen_witness_proof(statement):
         statement_proof = oidc_response.json()["value"]
 
         # request timestamp
-        proof_hash = hashlib.sha256(statement_proof).hexdigest()
+        proof_hash = hashlib.sha256(
+            statement_proof.encode("utf-8")).hexdigest()
         tsa_req = tsp.TimeStampReq({
             "version": "v1",
             "message_imprint": {
