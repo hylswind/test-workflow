@@ -107,7 +107,7 @@ def main():
         # generate witness proof
         witness_proof = witness_util.gen_witness_proof(witness_statement)
 
-        with open("proof.json", "w") as f:
+        with open(f"{args.instance_id}-deploy-provenance.json", "w") as f:
             json.dump(witness_proof, f)
     except BaseException as e:
         logging.error(str(e))

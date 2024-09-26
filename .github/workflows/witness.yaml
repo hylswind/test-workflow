@@ -19,15 +19,15 @@ jobs:
   witness:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
+      - name: Check out source code
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Setup Python environment
+        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3
         with:
           python-version: "3.10"
 
-      - name: Run the Python script
+      - name: Witness the instance
         env:
           AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
           AWS_KEY_SECRET: ${{ secrets.AWS_KEY_SECRET }}
@@ -36,7 +36,7 @@ jobs:
           python main.py "${{ github.event.inputs.region }}" "${{ github.event.inputs.instanceID }}"
 
       - name: Upload proof as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874
         with:
-          name: proof.json
-          path: proof.json
+          name: ${{ github.event.inputs.instanceID }}-deploy-provenance.json
+          path: ${{ github.event.inputs.instanceID }}-deploy-provenance.json

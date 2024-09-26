@@ -12,7 +12,7 @@ from asn1crypto import tsp, algos
 import instance_util
 
 WITNESS_TS_TAG = "WITNESS-TS-TAG"
-ALLOWED_INSTANCE_EVENTS = ["CreateTags"]
+ALLOWED_INSTANCE_EVENTS = []
 TSA_SERVER_URL = "http://timestamp.digicert.com"
 
 
@@ -91,8 +91,7 @@ def validate_instance_state(instance_id, boto3_session):
         for event in sorted(response["Events"], key=lambda x: x["EventTime"]):
             event_detail = json.loads(event["CloudTrailEvent"])
             if event_detail["requestParameters"]["CreateReplaceRootVolumeTaskRequest"]["InstanceId"] == instance_id:
-                raise Exception(
-                    "CreateReplaceRootVolumeTask event found.")
+                raise Exception("CreateReplaceRootVolumeTask event found.")
     except BaseException as e:
         logging.error(str(e))
         raise Exception("Failed to validate instance state.")
